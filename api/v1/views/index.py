@@ -12,9 +12,8 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"amenities": Amenity, "cities": City, "places": Place, 
+classes = {"amenities": Amenity, "cities": City, "places": Place,
            "reviews": Review, "states": State, "users": User}
-
 
 
 @app_views.route('/status')
@@ -27,10 +26,13 @@ def status():
 
 @app_views.route('/stats')
 def stats():
+    """ returns a json formatted output of the summary of items
+    Args:
+        mydict: dictionary for all items
+    """
     mydict = {}
     for key, value in classes.items():
         num = storage.count(value)
-        if (num):
-            mydict[key] = num
+        mydict[key] = num
 
     return jsonify(mydict)
